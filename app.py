@@ -1,6 +1,7 @@
 from flask import Flask,render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todo.db'
@@ -73,7 +74,13 @@ def delete(sno):
     
 
 if __name__ == "__main__":
-    # with app.app_context():
-    #     db.create_all()   # creates todo.db if it doesn't exist
-    app.run(debug=True, port=8000)
+    port = int(os.environ.get("PORT", 8000))
+    
+    # Ensure tables are created
+    if not os.path.exists("todo.db"):
+        with app.app_context():
+            db.create_all()
+    
+    app.run(host="0.0.0.0", port=port)
+
 

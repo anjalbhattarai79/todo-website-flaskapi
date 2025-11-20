@@ -1,3 +1,4 @@
+import os; os.chdir(os.path.dirname(__file__))
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
